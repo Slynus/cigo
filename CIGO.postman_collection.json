@@ -1,0 +1,229 @@
+{
+	"info": {
+		"_postman_id": "b1d0607e-f0c6-4cb6-b612-afd27bebadca",
+		"name": "CIGO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "City Search",
+			"item": [
+				{
+					"name": "Rennes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://www.meteofrance.com/mf3-rpc-portlet/rest/lieu/facet/pluie/search/Rennes\n",
+							"protocol": "http",
+							"host": [
+								"www",
+								"meteofrance",
+								"com"
+							],
+							"path": [
+								"mf3-rpc-portlet",
+								"rest",
+								"lieu",
+								"facet",
+								"pluie",
+								"search",
+								"Rennes\n"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Rennes 35000",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://www.meteofrance.com/mf3-rpc-portlet/rest/lieu/facet/pluie/search/35000\n",
+							"protocol": "http",
+							"host": [
+								"www",
+								"meteofrance",
+								"com"
+							],
+							"path": [
+								"mf3-rpc-portlet",
+								"rest",
+								"lieu",
+								"facet",
+								"pluie",
+								"search",
+								"35000\n"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "The id found in city search is the INSEE number of municipality. with an added 0",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "City Request",
+			"item": [
+				{
+					"name": "Rennes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://www.meteofrance.com/mf3-rpc-portlet/rest/pluie/352380",
+							"protocol": "http",
+							"host": [
+								"www",
+								"meteofrance",
+								"com"
+							],
+							"path": [
+								"mf3-rpc-portlet",
+								"rest",
+								"pluie",
+								"352380"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "All Clear",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://www.meteofrance.com/mf3-rpc-portlet/rest/pluie/352380",
+									"protocol": "http",
+									"host": [
+										"www",
+										"meteofrance",
+										"com"
+									],
+									"path": [
+										"mf3-rpc-portlet",
+										"rest",
+										"pluie",
+										"352380"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 07 May 2020 23:38:53 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Expires",
+									"value": "Thu, 07 May 2020 23:39:23 GMT"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "max-age=30"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "private"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"idLieu\": \"352380\",\n    \"echeance\": \"202005080140\",\n    \"lastUpdate\": \"01h25\",\n    \"isAvailable\": true,\n    \"hasData\": true,\n    \"niveauPluieText\": [\n        \"De01h40 à 02h40 : Pas de précipitations\"\n    ],\n    \"dataCadran\": [\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "Pluie dans 5 min (fake)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://www.meteofrance.com/mf3-rpc-portlet/rest/pluie/352380",
+									"protocol": "http",
+									"host": [
+										"www",
+										"meteofrance",
+										"com"
+									],
+									"path": [
+										"mf3-rpc-portlet",
+										"rest",
+										"pluie",
+										"352380"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 07 May 2020 23:44:28 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Expires",
+									"value": "Thu, 07 May 2020 23:44:58 GMT"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "max-age=30"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "private"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"idLieu\" : \"352380\",\n  \"echeance\" : \"202005080145\",\n  \"lastUpdate\" : \"01h30\",\n  \"isAvailable\" : true,\n  \"hasData\" : true,\n  \"niveauPluieText\" : [ \"De01h45 à 02h45 : Pas de précipitations\" ],\n  \"dataCadran\" : [ {\n    \"niveauPluieText\" : \"Pas de précipitations\",\n    \"niveauPluie\" : 1,\n    \"color\" : \"ffffff\"\n  },{\n    \"niveauPluieText\" : \"Précipitations faibles\",\n    \"niveauPluie\" : 2,\n    \"color\" : \"5ec5ed\"\n  },{\n    \"niveauPluieText\" : \"Précipitations modérés\",\n    \"niveauPluie\" : 3,\n    \"color\" : \"009ee0\"\n  },{\n    \"niveauPluieText\" : \"Précipitations fortes\",\n    \"niveauPluie\" : 4,\n    \"color\" : \"006ab3\"\n  }, {\n    \"niveauPluieText\" : \"Pas de précipitations\",\n    \"niveauPluie\" : 1,\n    \"color\" : \"ffffff\"\n  }, {\n    \"niveauPluieText\" : \"Pas de précipitations\",\n    \"niveauPluie\" : 1,\n    \"color\" : \"ffffff\"\n  }, {\n    \"niveauPluieText\" : \"Pas de précipitations\",\n    \"niveauPluie\" : 1,\n    \"color\" : \"ffffff\"\n  }, {\n    \"niveauPluieText\" : \"Pas de précipitations\",\n    \"niveauPluie\" : 1,\n    \"color\" : \"ffffff\"\n  }, {\n    \"niveauPluieText\" : \"Pas de précipitations\",\n    \"niveauPluie\" : 1,\n    \"color\" : \"ffffff\"\n  }, {\n    \"niveauPluieText\" : \"Pas de précipitations\",\n    \"niveauPluie\" : 1,\n    \"color\" : \"ffffff\"\n  }, {\n    \"niveauPluieText\" : \"Pas de précipitations\",\n    \"niveauPluie\" : 1,\n    \"color\" : \"ffffff\"\n  }, {\n    \"niveauPluieText\" : \"Pas de précipitations\",\n    \"niveauPluie\" : 1,\n    \"color\" : \"ffffff\"\n  } ]\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
