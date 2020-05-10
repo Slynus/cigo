@@ -90,6 +90,201 @@
 					},
 					"response": [
 						{
+							"name": "Rennes y pleut",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://www.meteofrance.com/mf3-rpc-portlet/rest/pluie/352380",
+									"protocol": "http",
+									"host": [
+										"www",
+										"meteofrance",
+										"com"
+									],
+									"path": [
+										"mf3-rpc-portlet",
+										"rest",
+										"pluie",
+										"352380"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 May 2020 20:51:37 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Expires",
+									"value": "Sat, 09 May 2020 20:52:07 GMT"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "max-age=30"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "private"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"idLieu\": \"352380\",\n    \"echeance\": \"202005092255\",\n    \"lastUpdate\": \"22h40\",\n    \"isAvailable\": true,\n    \"hasData\": true,\n    \"niveauPluieText\": [\n        \"De22h55 à 23h05 : Précipitations modérées\",\n        \"De23h05 à 23h55 : Pas de précipitations\"\n    ],\n    \"dataCadran\": [\n        {\n            \"niveauPluieText\": \"Précipitations modérées\",\n            \"niveauPluie\": 3,\n            \"color\": \"009ee0\"\n        },\n        {\n            \"niveauPluieText\": \"Précipitations modérées\",\n            \"niveauPluie\": 3,\n            \"color\": \"009ee0\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "Saures y pleut fort",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://www.meteofrance.com/mf3-rpc-portlet/rest/pluie/403070",
+									"protocol": "http",
+									"host": [
+										"www",
+										"meteofrance",
+										"com"
+									],
+									"path": [
+										"mf3-rpc-portlet",
+										"rest",
+										"pluie",
+										"403070"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 May 2020 20:55:15 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Expires",
+									"value": "Sat, 09 May 2020 20:55:45 GMT"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "max-age=30"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "private"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"idLieu\": \"403070\",\n    \"echeance\": \"202005092300\",\n    \"lastUpdate\": \"22h45\",\n    \"isAvailable\": true,\n    \"hasData\": true,\n    \"niveauPluieText\": [\n        \"De23h00 à 23h05 : Pas de précipitations\",\n        \"De23h05 à 23h10 : Précipitations modérées\",\n        \"De23h10 à 23h40 : Précipitations fortes\",\n        \"De23h40 à 23h50 : Précipitations faibles\",\n        \"De23h50 à 00h00 : Précipitations modérées\"\n    ],\n    \"dataCadran\": [\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Précipitations modérées\",\n            \"niveauPluie\": 3,\n            \"color\": \"009ee0\"\n        },\n        {\n            \"niveauPluieText\": \"Précipitations fortes\",\n            \"niveauPluie\": 4,\n            \"color\": \"006ab3\"\n        },\n        {\n            \"niveauPluieText\": \"Précipitations fortes\",\n            \"niveauPluie\": 4,\n            \"color\": \"006ab3\"\n        },\n        {\n            \"niveauPluieText\": \"Précipitations fortes\",\n            \"niveauPluie\": 4,\n            \"color\": \"006ab3\"\n        },\n        {\n            \"niveauPluieText\": \"Précipitations fortes\",\n            \"niveauPluie\": 4,\n            \"color\": \"006ab3\"\n        },\n        {\n            \"niveauPluieText\": \"Précipitations fortes\",\n            \"niveauPluie\": 4,\n            \"color\": \"006ab3\"\n        },\n        {\n            \"niveauPluieText\": \"Précipitations fortes\",\n            \"niveauPluie\": 4,\n            \"color\": \"006ab3\"\n        },\n        {\n            \"niveauPluieText\": \"Précipitations faibles\",\n            \"niveauPluie\": 2,\n            \"color\": \"5ec5ed\"\n        },\n        {\n            \"niveauPluieText\": \"Précipitations faibles\",\n            \"niveauPluie\": 2,\n            \"color\": \"5ec5ed\"\n        },\n        {\n            \"niveauPluieText\": \"Précipitations modérées\",\n            \"niveauPluie\": 3,\n            \"color\": \"009ee0\"\n        },\n        {\n            \"niveauPluieText\": \"Précipitations modérées\",\n            \"niveauPluie\": 3,\n            \"color\": \"009ee0\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "Gauriac no data",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://www.meteofrance.com/mf3-rpc-portlet/rest/pluie/331820",
+									"protocol": "http",
+									"host": [
+										"www",
+										"meteofrance",
+										"com"
+									],
+									"path": [
+										"mf3-rpc-portlet",
+										"rest",
+										"pluie",
+										"331820"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 09 May 2020 20:55:36 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Expires",
+									"value": "Sat, 09 May 2020 20:56:06 GMT"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "max-age=30"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "private"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"idLieu\": \"331820\",\n    \"echeance\": \"202005092300\",\n    \"lastUpdate\": \"22h45\",\n    \"isAvailable\": true,\n    \"hasData\": true,\n    \"niveauPluieText\": [\n        \"De23h00 à 23h05 : Pas de précipitations\",\n        \"De23h05 à 23h15 : Données indisponibles\",\n        \"De23h15 à 23h20 : Pas de précipitations\",\n        \"De23h20 à 23h25 : Données indisponibles\",\n        \"De23h25 à 00h00 : Pas de précipitations\"\n    ],\n    \"dataCadran\": [\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Données indisponibles\",\n            \"niveauPluie\": 0,\n            \"color\": \"e3e3e3\"\n        },\n        {\n            \"niveauPluieText\": \"Données indisponibles\",\n            \"niveauPluie\": 0,\n            \"color\": \"e3e3e3\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Données indisponibles\",\n            \"niveauPluie\": 0,\n            \"color\": \"e3e3e3\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        },\n        {\n            \"niveauPluieText\": \"Pas de précipitations\",\n            \"niveauPluie\": 1,\n            \"color\": \"ffffff\"\n        }\n    ]\n}"
+						},
+						{
 							"name": "All Clear",
 							"originalRequest": {
 								"method": "GET",
