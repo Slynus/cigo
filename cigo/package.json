@@ -2,6 +2,8 @@
   "name": "cigo",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://slynus.github.io/cigo/",
+  "proxy": "http://www.meteofrance.com",
   "dependencies": {
     "@material-ui/core": "^4.9.14",
     "@material-ui/icons": "^4.9.1",
@@ -35,7 +37,6 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://www.meteofrance.com",
   "devDependencies": {
     "gh-pages": "^2.2.0"
   }

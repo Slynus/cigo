@@ -109,10 +109,7 @@ function SmartMeteoWrapper(props) {
   }
 
   function cityFetch(citySearch) {
-    console.log("process.env.API_HOST");
-    console.log(process.env.REACT_APP_API_HOST);
     const API_URL = `${process.env.REACT_APP_API_HOST}/mf3-rpc-portlet/rest/lieu/facet/pluie/search`;
-
     return fetch(`${API_URL}/${citySearch}`);
   }
 

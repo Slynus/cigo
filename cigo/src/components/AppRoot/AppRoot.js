@@ -6,9 +6,6 @@ import  SmartMeteoWrapper from '../SmartMeteo/SmartMeteoWrapper';
 let theme = createMuiTheme();
 theme = responsiveFontSizes(theme);
 
-
-
-
 function AppRoot() {
   return (
     <ThemeProvider theme={theme}>
@@ -25,7 +22,5 @@ function AppRoot() {
     </ThemeProvider>
   );
 }
-
-
 
 export default AppRoot;
