@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AppRoot from './AppRoot';
+import AppRoot from './components/AppRoot/AppRoot';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import './index.css';
 
