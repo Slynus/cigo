@@ -1,0 +1,1 @@
+https://dev.to/ycmjason/javascript-fetch-retry-upon-failure-3p6g
