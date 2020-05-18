@@ -4,7 +4,7 @@ import { Box, TextField, Typography, Fab, Hidden, InputAdornment } from '@materi
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import SearchIcon from '@material-ui/icons/Search';
 import { makeStyles } from '@material-ui/core/styles';
-
+import log from '../../utils/logger';
 const useStyles = makeStyles({
   fab: {
     margin: 0,
@@ -39,30 +39,19 @@ function SmartMeteoWrapper(props) {
    * Trigger when the search is updated
   */
   useEffect(() => {
-
     if (currentCity.label.length === 2 || currentCity.label === defaultCity.label) {
       cityListUpdate(currentCity.label);
     }
 
     async function cityListUpdate(citySearch) {
-      const fetchResult = await cityFetch(citySearch);
-      const jsonResult = await fetchResult.json();
+      try {
+        const fetchResult = await cityFetch(citySearch);
+        setCityList(fetchResult);
 
-      const jsonTransformed = jsonResult.map(el => {
-        
-        // Remove the postal code from city name
-        let label = el.nomAffiche.split(' ');
-        if (label.length > 1) {
-          label.pop()
-          label = label.join(' ');
-        };
-        return {
-          label: label,
-          id: el.id
-        }
-      });
-
-      setCityList(jsonTransformed);
+      } catch (error) {
+        log.error(error);
+        // setState on error
+      }
     }
 
   }, [currentCity, defaultCity.label]);
@@ -76,21 +65,24 @@ function SmartMeteoWrapper(props) {
     meteoUpdate(displayedCity.id);
 
     async function meteoUpdate(cityId) {
-      const fetchResult = await meteoFetch(cityId);
-      const jsonResult = await fetchResult.json();
+      try {
+        const levelPluie = await meteoFetch(cityId);
 
-      const levelPluie = jsonResult.dataCadran.map(el => el.niveauPluie);
 
-      // majMeteooText() //V2
-      // majGraph()
+        // majMeteooText() //V2
+        // majGraph()
 
-      if (levelPluie[0] > 1) {
-        setMeteoText(texteAvecPluie);
-      } else {
-        setMeteoText(texteSansPluie);
+        if (levelPluie[0] > 1) {
+          setMeteoText(texteAvecPluie);
+        } else {
+          setMeteoText(texteSansPluie);
+        }
+
+      } catch (error) {
+        log.error(error);
+        // setState on error
       }
     }
-
   }, [displayedCity, meteoText]);
 
 
@@ -108,14 +100,39 @@ function SmartMeteoWrapper(props) {
     }
   }
 
-  function cityFetch(citySearch) {
+  async function cityFetch(citySearch) {
     const API_URL = `${process.env.REACT_APP_API_HOST}/mf3-rpc-portlet/rest/lieu/facet/pluie/search`;
-    return fetch(`${API_URL}/${citySearch}`);
+    const fetchResult = await fetch(`${API_URL}/${citySearch}`);
+    if (fetchResult.ok) {
+      const jsonResult = await fetchResult.json();
+      const jsonTransformed = jsonResult.map(el => {
+        // Remove the postal code from city name
+        let label = el.nomAffiche.split(' ');
+        if (label.length > 1) {
+          label.pop()
+          label = label.join(' ');
+        };
+        return {
+          label: label,
+          id: el.id
+        }
+      });
+      return jsonTransformed;
+    } else {
+      throw new Error("Can't Fetch Search API");
+    }
   }
 
-  function meteoFetch(cityId) {
+  async function meteoFetch(cityId) {
     const API_URL = `${process.env.REACT_APP_API_HOST}/mf3-rpc-portlet/rest/pluie`;
-    return fetch(`${API_URL}/${cityId}`);
+    const fetchResult = await fetch(`${API_URL}/${cityId}`);
+    if (fetchResult.ok) {
+      const jsonResult = await fetchResult.json();
+      const levelPluie = jsonResult.dataCadran.map(el => el.niveauPluie);
+      return levelPluie;
+    } else {
+      throw new Error("Can't Fetch Meteo API");
+    }
   }
 
   return (
