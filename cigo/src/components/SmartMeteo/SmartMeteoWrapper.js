@@ -1,20 +1,134 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
-import { Box, TextField, Typography, Fab, Hidden, InputAdornment } from '@material-ui/core';
-import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
-import SearchIcon from '@material-ui/icons/Search';
-import { makeStyles } from '@material-ui/core/styles';
+import { useState, useEffect,useCallback } from 'react';
+import DumbMeteoWrapper from '../SmartMeteo/DumbMeteoWrapper';
 import log from '../../utils/logger';
-const useStyles = makeStyles({
-  fab: {
-    margin: 0,
-    top: 'auto',
-    right: 20,
-    bottom: 20,
-    left: 'auto',
-    position: 'fixed',
+
+const chartDataDefault = [
+  {
+    hours: "15:00",
+    niveauPluie: 1,
+    niveauPluieText: "Pas de précipitations"
+  },
+  {
+    hours: "15:05",
+    niveauPluie: 2,
+    niveauPluieText: "Précipitations faibles"
+  },
+  {
+    hours: "15:10",
+    niveauPluie: 3,
+    niveauPluieText: "Précipitations modérées"
+  },
+  {
+    hours: "15:15",
+    niveauPluie: 3,
+    niveauPluieText: "Précipitations modérées"
+  },
+  {
+    hours: "15:20",
+    niveauPluie: 2,
+    niveauPluieText: "Précipitations faibles"
+  },
+  {
+    hours: "15:25",
+    niveauPluie: 4,
+    niveauPluieText: "Pas de précipitations"
+  },
+  {
+    hours: "15:30",
+    niveauPluie: null,
+    niveauPluieText: "Pas de précipitations"
+  },
+  {
+    hours: "15:35",
+    niveauPluie: 1,
+    niveauPluieText: "Pas de précipitations"
+  },
+  {
+    hours: "15:40",
+    niveauPluie: 4,
+    niveauPluieText: "Précipitations fortes"
+  },
+  {
+    hours: "15:45",
+    niveauPluie: 1,
+    niveauPluieText: "Pas de précipitations"
+  },
+  {
+    hours: "15:50",
+    niveauPluie: 0,
+    niveauPluieText: "Données indisponibles"
+  },
+  {
+    hours: "15:55",
+    niveauPluie: 1,
+    niveauPluieText: "Pas de précipitations"
   }
-});
+];
+
+const chartDataDefaultV2 = [
+  {
+    hours: "15:00",
+    niveauPluie: 1,
+    niveauPluieText: "Pas de précipitations"
+  },
+  {
+    hours: "15:05",
+    niveauPluie: 1,
+    niveauPluieText: "Pas de précipitations"
+  },
+  {
+    hours: "15:10",
+    niveauPluie: 1,
+    niveauPluieText: "Pas de précipitations"
+  },
+  {
+    hours: "15:15",
+    niveauPluie: 1,
+    niveauPluieText: "Pas de précipitations"
+  },
+  {
+    hours: "15:20",
+    niveauPluie: 1,
+    niveauPluieText: "Pas de précipitations"
+  },
+  {
+    hours: "15:25",
+    niveauPluie: 1,
+    niveauPluieText: "Pas de précipitations"
+  },
+  {
+    hours: "15:30",
+    niveauPluie: null,
+    niveauPluieText: "Pas de précipitations"
+  },
+  {
+    hours: "15:35",
+    niveauPluie: 1,
+    niveauPluieText: "Pas de précipitations"
+  },
+  {
+    hours: "15:40",
+    niveauPluie: 4,
+    niveauPluieText: "Précipitations fortes"
+  },
+  {
+    hours: "15:45",
+    niveauPluie: 1,
+    niveauPluieText: "Pas de précipitations"
+  },
+  {
+    hours: "15:50",
+    niveauPluie: 0,
+    niveauPluieText: "Données indisponibles"
+  },
+  {
+    hours: "15:55",
+    niveauPluie: 1,
+    niveauPluieText: "Pas de précipitations"
+  }
+
+];
 
 /**
  * Orchestrate State for application
@@ -33,7 +147,9 @@ function SmartMeteoWrapper(props) {
   const [displayedCity, setDisplayedCity] = useState(currentCity);
   const [cityList, setCityList] = useState([]);
 
-  const [meteoText, setMeteoText] = useState("");
+  const [meteoText, setMeteoText] = useState();
+  const [chartData, setChartData] = useState(chartDataDefault);
+
 
   /** 
    * Trigger when the search is updated
@@ -56,6 +172,29 @@ function SmartMeteoWrapper(props) {
 
   }, [currentCity, defaultCity.label]);
 
+  const meteoUpdate = useCallback(async (cityId)=> {
+    try {
+      const meteoResult = await meteoFetch(cityId);
+
+
+      // majMeteooText() //V2
+      // majGraph()
+
+      
+      if (meteoResult[0][1] > 1) {
+        setMeteoText(texteAvecPluie);
+      } else {
+        setMeteoText(texteSansPluie);
+      }
+
+      setChartData(meteoResult[1]);
+
+    } catch (error) {
+      log.error(error);
+      // setState on error
+    }
+  },[]);
+
   /**
    * Triggered when cityDisplayed update and text and graph should update
    */
@@ -64,26 +203,9 @@ function SmartMeteoWrapper(props) {
 
     meteoUpdate(displayedCity.id);
 
-    async function meteoUpdate(cityId) {
-      try {
-        const levelPluie = await meteoFetch(cityId);
+  }, [displayedCity,meteoUpdate]);
 
 
-        // majMeteooText() //V2
-        // majGraph()
-
-        if (levelPluie[0] > 1) {
-          setMeteoText(texteAvecPluie);
-        } else {
-          setMeteoText(texteSansPluie);
-        }
-
-      } catch (error) {
-        log.error(error);
-        // setState on error
-      }
-    }
-  }, [displayedCity, meteoText]);
 
 
   function searchHandleChange(event, value) {
@@ -101,7 +223,7 @@ function SmartMeteoWrapper(props) {
   }
 
   async function cityFetch(citySearch) {
-    const API_URL = `${process.env.REACT_APP_API_HOST}/mf3-rpc-portlet/rest/lieu/facet/pluie/search`;
+    const API_URL = `${process.env.REACT_APP_API_HOST}/http://www.meteofrance.com/mf3-rpc-portlet/rest/lieu/facet/pluie/search`;
     const fetchResult = await fetch(`${API_URL}/${citySearch}`);
     if (fetchResult.ok) {
       const jsonResult = await fetchResult.json();
@@ -124,15 +246,58 @@ function SmartMeteoWrapper(props) {
   }
 
   async function meteoFetch(cityId) {
-    const API_URL = `${process.env.REACT_APP_API_HOST}/mf3-rpc-portlet/rest/pluie`;
+    const API_URL = `${process.env.REACT_APP_API_HOST}/http://www.meteofrance.com/mf3-rpc-portlet/rest/pluie`;
     const fetchResult = await fetch(`${API_URL}/${cityId}`);
     if (fetchResult.ok) {
       const jsonResult = await fetchResult.json();
       const levelPluie = jsonResult.dataCadran.map(el => el.niveauPluie);
-      return levelPluie;
+      const jsonTransformed = processJsonForChart(jsonResult);
+
+      return [levelPluie,jsonTransformed];
     } else {
       throw new Error("Can't Fetch Meteo API");
     }
+
+    // Transform the json result from meteo API to a "chartable" one
+    function processJsonForChart(json) {
+
+      function getTimePlusMinutes(item, m) {
+        return item.getTime() + (m * 60 * 1000);
+      }
+
+      const timeStr = json.niveauPluieText[0].split(' ')[0];
+      const hourStartStr = timeStr[2] + timeStr[3];
+      const minutesStartStr = timeStr[5] + timeStr[6];
+      let startDate = new Date();
+      startDate.setHours(hourStartStr);
+      startDate.setMinutes(minutesStartStr);
+
+      let jsonChart = json.dataCadran;
+      jsonChart = jsonChart.map((el,index) => {
+        let newEl = {};
+        if (el.niveauPluie === 0) {
+          newEl.niveauPluie = null;
+        } else {
+          newEl.niveauPluie = el.niveauPluie - 1
+        }
+
+        let startDateCopy = new Date(startDate.getTime());
+        startDateCopy.setTime(getTimePlusMinutes(startDate,5*index));
+
+        newEl.hours = `${startDateCopy.getHours()}:${(startDateCopy.getMinutes()<10?'0':'') + startDateCopy.getMinutes()}`;
+        return newEl;
+      });
+
+
+      return jsonChart;
+    }
+  }
+
+
+
+  function fabHandleClick() {
+    log.debug("é_é");
+    setChartData(chartDataDefaultV2);
   }
 
   return (
@@ -142,82 +307,9 @@ function SmartMeteoWrapper(props) {
       searchCityList={cityList}
       searchHandleChange={searchHandleChange}
       meteoText={meteoText}
+      chartData={chartData}
+      fabHandleClick={fabHandleClick}
     />
-  );
-}
-
-function DumbMeteoWrapper(props) {
-  const classes = useStyles();
-
-  return (
-    <React.Fragment>
-      <Box display="flex" flexDirection="column">
-        <Box my={1}>
-          <SearchAutocomplete
-            list={props.searchCityList}
-            defaultValue={props.searchDefaultValue}
-            inputValue={props.searchInputValue}
-            handleChange={props.searchHandleChange}
-            label="Ville" />
-        </Box>
-        <Box my={1}>
-          <MeteoText text={props.meteoText} />
-        </Box>
-        <Box my={1}>
-          <div style={{ padding: '50px', backgroundColor: 'aqua' }}></div>
-        </Box>
-        <Hidden mdUp>
-          <Fab color="primary" aria-label="search" className={classes.fab}>
-            <SearchIcon />
-          </Fab>
-        </Hidden>
-      </Box>
-    </React.Fragment>
-  );
-}
-
-function SearchAutocomplete(props) {
-
-  const filterOptions = createFilterOptions({
-    limit: 25,
-    ignoreCase: true,
-    ignoreAccents: true,
-  });
-
-  return (
-    <Autocomplete
-      defaultValue={props.defaultValue.label}
-      // inputValue={props.inputValue}
-      // defaultValue={props.defaultValue.label}
-      // inputValue={props.inputValue.label}
-
-      // getOptionLabel={opt => opt.label}
-      options={props.list.map(el => el.label)}
-
-      onInputChange={props.handleChange}
-      selectOnFocus
-      handleHomeEndKeys
-
-      freeSolo
-      filterOptions={filterOptions}
-      renderInput={(params) =>
-        <TextField {...params} label={props.label} variant="outlined"
-          InputProps={{
-            ...params.InputProps, startAdornment: (
-              <InputAdornment position="end">
-                <SearchIcon />
-              </InputAdornment>
-            )
-          }} />}
-    />
-  );
-}
-
-function MeteoText(props) {
-  return (
-    <Typography variant="h1" component="h1" gutterBottom>
-      {props.text}
-    </Typography>
   );
 }
 
