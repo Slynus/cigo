@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/cigo/static/css/main.d498bfb3.chunk.css",
-    "main.js": "/cigo/static/js/main.0e9dbfde.chunk.js",
-    "main.js.map": "/cigo/static/js/main.0e9dbfde.chunk.js.map",
+    "main.js": "/cigo/static/js/main.8061e197.chunk.js",
+    "main.js.map": "/cigo/static/js/main.8061e197.chunk.js.map",
     "runtime-main.js": "/cigo/static/js/runtime-main.69606d06.js",
     "runtime-main.js.map": "/cigo/static/js/runtime-main.69606d06.js.map",
-    "static/js/2.918150e1.chunk.js": "/cigo/static/js/2.918150e1.chunk.js",
-    "static/js/2.918150e1.chunk.js.map": "/cigo/static/js/2.918150e1.chunk.js.map",
+    "static/js/2.e2917349.chunk.js": "/cigo/static/js/2.e2917349.chunk.js",
+    "static/js/2.e2917349.chunk.js.map": "/cigo/static/js/2.e2917349.chunk.js.map",
     "index.html": "/cigo/index.html",
-    "precache-manifest.5f938657130a19aaaa7357d3c10579c1.js": "/cigo/precache-manifest.5f938657130a19aaaa7357d3c10579c1.js",
+    "precache-manifest.d0acc78465d57af784c7722f2ca80d22.js": "/cigo/precache-manifest.d0acc78465d57af784c7722f2ca80d22.js",
     "service-worker.js": "/cigo/service-worker.js",
     "static/css/main.d498bfb3.chunk.css.map": "/cigo/static/css/main.d498bfb3.chunk.css.map",
-    "static/js/2.918150e1.chunk.js.LICENSE.txt": "/cigo/static/js/2.918150e1.chunk.js.LICENSE.txt"
+    "static/js/2.e2917349.chunk.js.LICENSE.txt": "/cigo/static/js/2.e2917349.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.69606d06.js",
-    "static/js/2.918150e1.chunk.js",
+    "static/js/2.e2917349.chunk.js",
     "static/css/main.d498bfb3.chunk.css",
-    "static/js/main.0e9dbfde.chunk.js"
+    "static/js/main.8061e197.chunk.js"
   ]
 }
