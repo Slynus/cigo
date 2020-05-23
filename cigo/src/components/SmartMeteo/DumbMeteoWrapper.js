@@ -208,7 +208,7 @@ function MeteoChart(props) {
                 width={500}
                 data={props.chartData}
             >
-                <Area type="monotone" dataKey="niveauPluie" stroke="#3f51b5" fill="#3f51b5" isAnimationActive={true} />
+                <Area type="monotone" dataKey="niveauPluie" stroke="#3f51b5" fill="#3f51b5" fillOpacity={0.8} isAnimationActive={true} />
                 <XAxis dataKey="hours" />
                 <YAxis width={90} tickMargin={5} ticks={myTicks} tick={<RenderCustomAxisTick />} />
                 <Tooltip content={<RenderCustomTooltip />} />
