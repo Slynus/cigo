@@ -1,9 +1,9 @@
 import React from 'react';
-import { Box, TextField, Typography, Fab, Hidden, InputAdornment } from '@material-ui/core';
+import { Box, TextField, Typography, Fab, Hidden, InputAdornment, Card, CardContent, Paper } from '@material-ui/core';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import SearchIcon from '@material-ui/icons/Search';
 import { makeStyles } from '@material-ui/core/styles';
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip } from 'recharts';
 
 const useStyles = makeStyles({
     fab: {
@@ -13,6 +13,9 @@ const useStyles = makeStyles({
         bottom: 20,
         left: 'auto',
         position: 'fixed',
+    },
+    paper: {
+        padding: 15
     }
 });
 
@@ -23,20 +26,29 @@ function DumbMeteoWrapper(props) {
         <React.Fragment>
             <Box display="flex" flexDirection="column">
                 <Box my={1}>
-                    <SearchAutocomplete
-                        list={props.searchCityList}
-                        defaultValue={props.searchDefaultValue}
-                        inputValue={props.searchInputValue}
-                        handleChange={props.searchHandleChange}
-                        label="Ville" />
+                    <Paper className={classes.paper} elevation={3}>
+                        <SearchAutocomplete
+                            list={props.searchCityList}
+                            defaultValue={props.searchDefaultValue}
+                            inputValue={props.searchInputValue}
+                            handleChange={props.searchHandleChange}
+                            label="Ville" />
+                    </Paper>
                 </Box>
                 <Box my={1}>
-                    <MeteoText text={props.meteoText} />
+                    <Paper className={classes.paper} elevation={3}>
+                        <MeteoText
+                            rainLevel={props.rainLevel}
+                            timeBeforeRain={props.timeBeforeRain}
+                        />
+                    </Paper>
                 </Box>
                 <Box my={1}>
-                    <MeteoChart
-                        chartData={props.chartData}
-                    />
+                    <Paper className={classes.paper} elevation={3}>
+                        <MeteoChart
+                            chartData={props.chartData}
+                        />
+                    </Paper>
                 </Box>
                 <Hidden mdUp>
                     <Fab color="primary" aria-label="search" className={classes.fab} onClick={props.fabHandleClick}>
@@ -81,27 +93,126 @@ function SearchAutocomplete(props) {
 }
 
 function MeteoText(props) {
-    return (
-        <Typography variant="h1" component="h1" gutterBottom>
-            {props.text}
-        </Typography>
-    );
+
+    let renderText;
+
+    if (props.rainLevel > 0) {
+
+        let rainLevelText;
+        switch (props.rainLevel) {
+            case 1:
+                rainLevelText = "faible"
+                break;
+            case 2:
+                rainLevelText = "modérée"
+                break;
+            case 3:
+                rainLevelText = "forte"
+                break;
+            default:
+                rainLevelText = "torrentielle"
+                break;
+        }
+        renderText = `Attention pluie ${rainLevelText} prévue dans ${props.timeBeforeRain} minutes ! 🌧️`;
+    } else {
+        renderText = "Vous pouvez sortir sans risque ! 😎";
+    }
+
+    const shouldRender = props.rainLevel > -1;
+
+    if (shouldRender) {
+        return (
+            < Typography variant="h2" component="h1" gutterBottom >
+                {renderText}
+            </Typography >
+        );
+    } else {
+        return null;
+    }
+
 }
 
 function MeteoChart(props) {
+
+    const RenderCustomAxisTick = ({ x, y, payload }) => {
+        let renderText;
+
+        switch (payload.value) {
+            case 0:
+                renderText = "Pas de Pluie"
+
+                break;
+            case 1:
+                renderText = "Faible"
+
+                break;
+            case 2:
+                renderText = "Modérée"
+
+                break;
+            case 3:
+                renderText = "Forte"
+                break;
+            default:
+                renderText = "Pas d'info";
+        }
+
+        return (
+            <g transform={`translate(${x},${y})`}>
+                <text x={0} y={0} dy={0} textAnchor="end" fill="#666" >{renderText}</text>
+            </g>
+        );
+    };
+
+    const myTicks = [0, 1, 2, 3];
+
+    const RenderCustomTooltip = (props) => {
+        let renderText;
+
+        if (props && props.payload && props.payload.length) {
+            const realPayload = props?.payload[0].payload;
+            switch (realPayload.niveauPluie) {
+                case 0:
+                    renderText = `Pas de pluie prévue.`;
+                    break;
+                case 1:
+                    renderText = `Pluie faible prévue.`;
+                    break;
+                case 2:
+                    renderText = `Pluie modérée prévue.`;
+                    break;
+                case 3:
+                    renderText = `Pluie forte prévue.`;
+                    break;
+                default:
+                    renderText = `Pluie torrentielle prévue.`;
+                    break;
+            }
+        }
+
+        return (
+            <Card >
+                <CardContent>
+                    <Typography variant="body1">
+                        {renderText}
+                    </Typography>
+                </CardContent>
+            </Card>
+        );
+    };
+
     return (
         <ResponsiveContainer width="100%" height={200}>
-            <LineChart
+            <AreaChart
                 height={200}
                 width={500}
                 data={props.chartData}
             >
-                <Line type="monotone" dataKey="niveauPluie" stroke="#8884d8" isAnimationActive={false}/>
+                <Area type="monotone" dataKey="niveauPluie" stroke="#3f51b5" fill="#3f51b5" isAnimationActive={true} />
                 <XAxis dataKey="hours" />
-                <YAxis tickMargin={25} />
-                <CartesianGrid stroke="#ccc" />
-                <Tooltip />
-            </LineChart>
+                <YAxis width={90} tickMargin={5} ticks={myTicks} tick={<RenderCustomAxisTick />} />
+                <Tooltip content={<RenderCustomTooltip />} />
+            </AreaChart>
         </ResponsiveContainer>
     )
 }

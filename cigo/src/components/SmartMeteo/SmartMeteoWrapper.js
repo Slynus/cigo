@@ -1,134 +1,8 @@
 import React from 'react';
-import { useState, useEffect,useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import DumbMeteoWrapper from '../SmartMeteo/DumbMeteoWrapper';
 import log from '../../utils/logger';
 
-const chartDataDefault = [
-  {
-    hours: "15:00",
-    niveauPluie: 1,
-    niveauPluieText: "Pas de précipitations"
-  },
-  {
-    hours: "15:05",
-    niveauPluie: 2,
-    niveauPluieText: "Précipitations faibles"
-  },
-  {
-    hours: "15:10",
-    niveauPluie: 3,
-    niveauPluieText: "Précipitations modérées"
-  },
-  {
-    hours: "15:15",
-    niveauPluie: 3,
-    niveauPluieText: "Précipitations modérées"
-  },
-  {
-    hours: "15:20",
-    niveauPluie: 2,
-    niveauPluieText: "Précipitations faibles"
-  },
-  {
-    hours: "15:25",
-    niveauPluie: 4,
-    niveauPluieText: "Pas de précipitations"
-  },
-  {
-    hours: "15:30",
-    niveauPluie: null,
-    niveauPluieText: "Pas de précipitations"
-  },
-  {
-    hours: "15:35",
-    niveauPluie: 1,
-    niveauPluieText: "Pas de précipitations"
-  },
-  {
-    hours: "15:40",
-    niveauPluie: 4,
-    niveauPluieText: "Précipitations fortes"
-  },
-  {
-    hours: "15:45",
-    niveauPluie: 1,
-    niveauPluieText: "Pas de précipitations"
-  },
-  {
-    hours: "15:50",
-    niveauPluie: 0,
-    niveauPluieText: "Données indisponibles"
-  },
-  {
-    hours: "15:55",
-    niveauPluie: 1,
-    niveauPluieText: "Pas de précipitations"
-  }
-];
-
-const chartDataDefaultV2 = [
-  {
-    hours: "15:00",
-    niveauPluie: 1,
-    niveauPluieText: "Pas de précipitations"
-  },
-  {
-    hours: "15:05",
-    niveauPluie: 1,
-    niveauPluieText: "Pas de précipitations"
-  },
-  {
-    hours: "15:10",
-    niveauPluie: 1,
-    niveauPluieText: "Pas de précipitations"
-  },
-  {
-    hours: "15:15",
-    niveauPluie: 1,
-    niveauPluieText: "Pas de précipitations"
-  },
-  {
-    hours: "15:20",
-    niveauPluie: 1,
-    niveauPluieText: "Pas de précipitations"
-  },
-  {
-    hours: "15:25",
-    niveauPluie: 1,
-    niveauPluieText: "Pas de précipitations"
-  },
-  {
-    hours: "15:30",
-    niveauPluie: null,
-    niveauPluieText: "Pas de précipitations"
-  },
-  {
-    hours: "15:35",
-    niveauPluie: 1,
-    niveauPluieText: "Pas de précipitations"
-  },
-  {
-    hours: "15:40",
-    niveauPluie: 4,
-    niveauPluieText: "Précipitations fortes"
-  },
-  {
-    hours: "15:45",
-    niveauPluie: 1,
-    niveauPluieText: "Pas de précipitations"
-  },
-  {
-    hours: "15:50",
-    niveauPluie: 0,
-    niveauPluieText: "Données indisponibles"
-  },
-  {
-    hours: "15:55",
-    niveauPluie: 1,
-    niveauPluieText: "Pas de précipitations"
-  }
-
-];
 
 /**
  * Orchestrate State for application
@@ -140,15 +14,14 @@ function SmartMeteoWrapper(props) {
     id: 352380
   }
 
-  const texteSansPluie = "Vous pouvez sortir sans risque ! 😎";
-  const texteAvecPluie = "Attention pluie prévue ! 🌧️";
-
   const [currentCity, setCurrentCity] = useState(defaultCity);
   const [displayedCity, setDisplayedCity] = useState(currentCity);
   const [cityList, setCityList] = useState([]);
 
-  const [meteoText, setMeteoText] = useState();
-  const [chartData, setChartData] = useState(chartDataDefault);
+  const [rainLevel, setRainLevel] = useState(-1);
+  const [timeBeforeRain, setTimeBeforeRain] = useState();
+
+  const [chartData, setChartData] = useState([]);
 
 
   /** 
@@ -172,28 +45,27 @@ function SmartMeteoWrapper(props) {
 
   }, [currentCity, defaultCity.label]);
 
-  const meteoUpdate = useCallback(async (cityId)=> {
+  const meteoUpdate = useCallback(async (cityId) => {
     try {
       const meteoResult = await meteoFetch(cityId);
 
+      const rainLevel = meteoResult.find(el => el.niveauPluie > 0);
 
-      // majMeteooText() //V2
-      // majGraph()
-
-      
-      if (meteoResult[0][1] > 1) {
-        setMeteoText(texteAvecPluie);
+      if(rainLevel){
+        const timeBeforeRain = meteoResult.indexOf(rainLevel) * 5;
+        setRainLevel(rainLevel.niveauPluie);
+        setTimeBeforeRain(timeBeforeRain);  
       } else {
-        setMeteoText(texteSansPluie);
+        setRainLevel(0);
       }
-
-      setChartData(meteoResult[1]);
+      
+      setChartData(meteoResult);
 
     } catch (error) {
       log.error(error);
       // setState on error
     }
-  },[]);
+  }, []);
 
   /**
    * Triggered when cityDisplayed update and text and graph should update
@@ -203,7 +75,7 @@ function SmartMeteoWrapper(props) {
 
     meteoUpdate(displayedCity.id);
 
-  }, [displayedCity,meteoUpdate]);
+  }, [displayedCity, meteoUpdate]);
 
 
 
@@ -250,10 +122,7 @@ function SmartMeteoWrapper(props) {
     const fetchResult = await fetch(`${API_URL}/${cityId}`);
     if (fetchResult.ok) {
       const jsonResult = await fetchResult.json();
-      const levelPluie = jsonResult.dataCadran.map(el => el.niveauPluie);
-      const jsonTransformed = processJsonForChart(jsonResult);
-
-      return [levelPluie,jsonTransformed];
+      return processJsonForChart(jsonResult);
     } else {
       throw new Error("Can't Fetch Meteo API");
     }
@@ -273,7 +142,7 @@ function SmartMeteoWrapper(props) {
       startDate.setMinutes(minutesStartStr);
 
       let jsonChart = json.dataCadran;
-      jsonChart = jsonChart.map((el,index) => {
+      jsonChart = jsonChart.map((el, index) => {
         let newEl = {};
         if (el.niveauPluie === 0) {
           newEl.niveauPluie = null;
@@ -282,9 +151,9 @@ function SmartMeteoWrapper(props) {
         }
 
         let startDateCopy = new Date(startDate.getTime());
-        startDateCopy.setTime(getTimePlusMinutes(startDate,5*index));
+        startDateCopy.setTime(getTimePlusMinutes(startDate, 5 * index));
 
-        newEl.hours = `${startDateCopy.getHours()}:${(startDateCopy.getMinutes()<10?'0':'') + startDateCopy.getMinutes()}`;
+        newEl.hours = `${startDateCopy.getHours()}:${(startDateCopy.getMinutes() < 10 ? '0' : '') + startDateCopy.getMinutes()}`;
         return newEl;
       });
 
@@ -293,11 +162,76 @@ function SmartMeteoWrapper(props) {
     }
   }
 
-
-
   function fabHandleClick() {
-    log.debug("é_é");
-    setChartData(chartDataDefaultV2);
+    let muiInput = document.getElementsByClassName("MuiAutocomplete-input")[0];
+    muiInput.focus();
+
+    const chartDataTest = [
+      {
+        hours: "15:00",
+        niveauPluie: 1,
+        niveauPluieText: "Pas de précipitations"
+      },
+      {
+        hours: "15:05",
+        niveauPluie: 1,
+        niveauPluieText: "Pas de précipitations"
+      },
+      {
+        hours: "15:10",
+        niveauPluie: 1,
+        niveauPluieText: "Pas de précipitations"
+      },
+      {
+        hours: "15:15",
+        niveauPluie: 1,
+        niveauPluieText: "Pas de précipitations"
+      },
+      {
+        hours: "15:20",
+        niveauPluie: 1,
+        niveauPluieText: "Pas de précipitations"
+      },
+      {
+        hours: "15:25",
+        niveauPluie: 1,
+        niveauPluieText: "Pas de précipitations"
+      },
+      {
+        hours: "15:30",
+        niveauPluie: null,
+        niveauPluieText: "Pas de précipitations"
+      },
+      {
+        hours: "15:35",
+        niveauPluie: 1,
+        niveauPluieText: "Pas de précipitations"
+      },
+      {
+        hours: "15:40",
+        niveauPluie: 4,
+        niveauPluieText: "Précipitations fortes"
+      },
+      {
+        hours: "15:45",
+        niveauPluie: 1,
+        niveauPluieText: "Pas de précipitations"
+      },
+      {
+        hours: "15:50",
+        niveauPluie: 0,
+        niveauPluieText: "Données indisponibles"
+      },
+      {
+        hours: "15:55",
+        niveauPluie: 1,
+        niveauPluieText: "Pas de précipitations"
+      }
+    
+    ];
+    setChartData(chartDataTest);
+    setRainLevel(3);
+    setTimeBeforeRain(15);
   }
 
   return (
@@ -306,7 +240,8 @@ function SmartMeteoWrapper(props) {
       searchInputValue={currentCity}
       searchCityList={cityList}
       searchHandleChange={searchHandleChange}
-      meteoText={meteoText}
+      rainLevel={rainLevel}
+      timeBeforeRain={timeBeforeRain}
       chartData={chartData}
       fabHandleClick={fabHandleClick}
     />
